@@ -2,7 +2,7 @@ Gdeeplearn
 A simple deep learning package inspired by the concepts in Grokking Deep Learning by Andrew W. Trask. The package is located in the src/gdeeplearn directory.
 Installation
 This package has no external dependencies. To use it, clone the repository and install it using Poetry:
-git clone https://github.com/yourusername/Gdeeplearn.git
+git clone https://github.com/AbdelrahmanMohmmed/Gdeeplearning.git
 cd Gdeeplearn
 poetry install
 
