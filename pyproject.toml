@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "Gdeeplearn"
+version = "0.1.0"
+description = "A simple deep learning package"
+authors = ["AbdelrahmanMohammed <mrchessarab2233@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"  # Match your Python version
+
+[[tool.poetry.packages]]
+include = "gdeeplearn"
+from = "src"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
