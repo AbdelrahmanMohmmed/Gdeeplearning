@@ -80,3 +80,46 @@ class SimpleDL:
         for i in range(len(weight_matrix)):
             output[i] = SimpleDL.neural_network_multiple_inputs(input_list, weight_matrix[i])
         return output
+    
+    @staticmethod
+    def hot_cold_learning(input_val, weight, goal_prediction, step_size=0.01, epochs=1101, tolerance=0.00001):
+        """
+        Implements a hot and cold learning algorithm to adjust weight toward a goal prediction.
+        
+        Args:
+            input_val (float): The input value to the neuron.
+            weight (float): The initial weight to be adjusted.
+            goal_prediction (float): The target output value.
+            step_size (float, optional): The amount to adjust the weight. Defaults to 0.01.
+            epochs (int, optional): The maximum number of iterations. Defaults to 1101.
+            tolerance (float, optional): The error threshold to stop learning. Defaults to 0.00001.
+        
+        Returns:
+            float: The optimized weight after learning.
+        
+        Notes:
+            Adjusts the weight by testing small increases and decreases, moving in the direction
+            that reduces the squared error. Stops if the error falls below the tolerance or
+            reaches the maximum epochs.
+        """
+        current_weight = weight
+        for iteration in range(epochs):
+            prediction = input_val * current_weight
+            error = (prediction - goal_prediction) ** 2
+            print(f"Iteration {iteration}, Error: {error:.6f}, Prediction: {prediction:.6f}")
+            
+            up_prediction = input_val * (current_weight + step_size)
+            up_error = (up_prediction - goal_prediction) ** 2
+            down_prediction = input_val * (current_weight - step_size)
+            down_error = (down_prediction - goal_prediction) ** 2
+            
+            if error < tolerance:
+                break
+                
+            if down_error < up_error:
+                current_weight -= step_size
+            elif up_error < down_error:
+                current_weight += step_size
+                
+        return current_weight
+
