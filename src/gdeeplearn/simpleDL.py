@@ -122,4 +122,8 @@ class SimpleDL:
                 current_weight += step_size
                 
         return current_weight
+<<<<<<< HEAD
 #hello
+=======
+
+>>>>>>> 58b2abc359e618ce627a324fdf55757d4541dc2c
