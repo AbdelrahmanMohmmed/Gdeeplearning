@@ -123,3 +123,38 @@ class SimpleDL:
                 
         return current_weight
 
+    @staticmethod
+    def gradient_descent_learning(input_val, weight, goal_pred, alpha=0.01, epochs=1000, tolerance=0.00001):
+        """
+        Adjusts the weight using iterative gradient descent based on the prediction error.
+        
+        Args:
+            input_val (float): The input value to the neuron.
+            weight (float): The initial weight to be adjusted.
+            goal_pred (float): The target prediction value.
+            alpha (float, optional): The learning rate. Defaults to 0.01.
+            epochs (int, optional): The maximum number of iterations. Defaults to 1000.
+            tolerance (float, optional): The error threshold to stop learning. Defaults to 0.00001.
+        
+        Returns:
+            float: The optimized weight after iterative gradient descent.
+        
+        Notes:
+            Iteratively updates the weight using the gradient descent rule: weight -= input * delta * alpha,
+            where delta is the difference between prediction and goal. Stops if the error falls below
+            the tolerance or reaches the maximum epochs.
+        """
+        current_weight = weight
+        for iteration in range(epochs):
+            pred = SimpleDL.neural_network_one_input(input_val, current_weight)
+            error = (pred - goal_pred) ** 2
+            delta = pred - goal_pred
+            weight_delta = input_val * delta
+            current_weight -= weight_delta * alpha
+            print(f"Iteration {iteration}, Error: {error:.6f}, Prediction: {pred:.6f}, Weight: {current_weight:.6f}")
+
+            if error < tolerance:
+                break
+                
+        return current_weight
+
