@@ -45,6 +45,15 @@ class TestSimpleDL(unittest.TestCase):
         optimized_weight_small_step = SimpleDL.hot_cold_learning(input_val, initial_weight, goal_prediction, step_size=0.01)
         self.assertAlmostEqual(optimized_weight_small_step, 2.0, delta=0.0001)
 
+    def test_gradient_descent_learning(self):
+        input_val = 2.0
+        initial_weight = 0.0
+        goal_pred = 4.0
+        optimized_weight = SimpleDL.gradient_descent_learning(input_val, initial_weight, goal_pred)
+        self.assertAlmostEqual(optimized_weight, 2.0, delta=0.01)
+        optimized_weight_small_alpha = SimpleDL.gradient_descent_learning(input_val, initial_weight, goal_pred, alpha=0.001)
+        self.assertAlmostEqual(optimized_weight_small_alpha, 2.0, delta=0.05)
+
 
 if __name__ == '__main__':
     unittest.main()
