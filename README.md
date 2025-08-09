@@ -34,6 +34,12 @@ initial_weight = 0.0
 goal_prediction = 4.0
 optimized_weight = SimpleDL.hot_cold_learning(input_val, initial_weight, goal_prediction)  # Adjusts weight to ~2.0
 
+# Gradient descent learning
+input_val = 2.0
+initial_weight = 0.0
+goal_pred = 4.0
+optimized_weight_gd = SimpleDL.gradient_descent_learning(input_val, initial_weight, goal_pred)  # Adjusts weight toward ~2.0 iteratively
+
 Testing
 Run the included tests with Poetry:
 poetry run python -m unittest tests/test_simpledl.py
