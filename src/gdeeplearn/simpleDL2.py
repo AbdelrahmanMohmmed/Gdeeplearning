@@ -5,7 +5,7 @@ class SimpleDL:
     """A professional deep learning class inspired by basic neural network concepts from
     'Grokking Deep Learning' by Andrew W. Trask.
     
-    This class provides static and instance methods for neural network computations and training.
+    This class provides instance and static methods for neural network computations and training.
     """
 
     # Class-level defaults (can be overridden in __init__)
@@ -54,6 +54,8 @@ class SimpleDL:
             raise ValueError("Input must be a scalar or NumPy array.")
         if not np.isscalar(weight) and not isinstance(weight, np.ndarray):
             raise ValueError("Weight must be a scalar or NumPy array.")
+        if isinstance(input_val, str) or isinstance(weight, str):
+            raise ValueError("Input and weight must be numeric, not strings.")
         return np.multiply(input_val, weight)
 
     @staticmethod
@@ -153,7 +155,11 @@ class SimpleDL:
         for iteration in range(epochs):
             prediction = SimpleDL.neural_network_one_input(input_val, current_weight)
             error = np.square(prediction - goal_prediction)
-            print(f"Iteration {iteration}, Error: {error:.6f}, Prediction: {prediction:.6f}")
+            # Handle array printing
+            if np.size(error) > 1:
+                print(f"Iteration {iteration}, Error: {np.array2string(error, precision=6)}, Prediction: {np.array2string(prediction, precision=6)}")
+            else:
+                print(f"Iteration {iteration}, Error: {error:.6f}, Prediction: {prediction:.6f}")
             
             up_prediction = SimpleDL.neural_network_one_input(input_val, current_weight + step_size)
             up_error = np.square(up_prediction - goal_prediction)
@@ -198,7 +204,11 @@ class SimpleDL:
             delta = pred - goal_pred
             weight_delta = np.multiply(input_val, delta)
             current_weight -= np.multiply(weight_delta, alpha)
-            print(f"Iteration {iteration}, Error: {error:.6f}, Prediction: {pred:.6f}, Weight: {current_weight:.6f}")
+            # Handle array printing
+            if np.size(error) > 1:
+                print(f"Iteration {iteration}, Error: {np.array2string(error, precision=6)}, Prediction: {np.array2string(pred, precision=6)}, Weight: {np.array2string(current_weight, precision=6)}")
+            else:
+                print(f"Iteration {iteration}, Error: {error:.6f}, Prediction: {pred:.6f}, Weight: {current_weight:.6f}")
 
             if np.all(error < tolerance):
                 break
