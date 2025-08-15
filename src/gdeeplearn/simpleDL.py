@@ -157,4 +157,4 @@ class SimpleDL:
                 break
                 
         return current_weight
-
+    
