@@ -10,7 +10,7 @@ class SimpleDL:
 
     # Class-level defaults (can be overridden in __init__)
     DEFAULT_ALPHA = 0.01
-    DEFAULT_EPOCHS = 1000
+    DEFAULT_EPOCHS = 300
     DEFAULT_TOLERANCE = 0.00001
     DEFAULT_HIDDEN_SIZE = 10
     DEFAULT_NUM_LABELS = 10
@@ -284,7 +284,18 @@ class SimpleDL:
             correct_count += correct_cnt / len(input_data)
             print(f"\rI: {j}, Error: {error/float(len(input_data)):.5f}, "
                   f"Correct: {correct_cnt/float(len(input_data)):.5f}", end='')
-
+            
+            if j % 10 == 0 or j == self.epochs - 1:
+                error, correct_cnt = (0.0, 0)
+                for i in range(len(input_data)):
+                    layer_0 = input_data[i:i+1]
+                    layer_1 = self.relu(np.dot(layer_0, self.weights_0_1))
+                    layer_2 = np.dot(layer_1, self.weights_1_2)
+                    error += np.sum((labels[i:i+1] - layer_2) ** 2)
+                    correct_cnt += int(np.argmax(layer_2) == np.argmax(labels[i:i+1]))
+                print(f" Test-Err:{error/float(len(input_data)):.5f}"
+                      f" Test-Acc:{correct_cnt/float(len(input_data)):.5f}")
+        
         avg_error = total_error / self.epochs
         avg_accuracy = correct_count / self.epochs
         return avg_error, avg_accuracy
